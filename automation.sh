@@ -4,11 +4,11 @@ cd /Users/mattkahler/Desktop/cowpea_test
 
 # Filtering Ensembl data set for strictly gene regions of chromosomes 
 
-awk '$3 == "gene" && $1 ~ /^[1-7]/{print $1 "\t" $3 "\t" $4 "\t" $5 "\t" $9}' Vigna_unguiculata.ASM411807v1.60.chr.gff3 > filtered_assembly.gff3
+awk '$3 == "gene" && $1 ~ /^[1-11]/{print $1 "\t" $3 "\t" $4 "\t" $5 "\t" $9}' Vigna_unguiculata.ASM411807v1.60.chr.gff3 > filtered_assembly.gff3
 
 # Removing the header from cowpea_test.tsv and Compara
 
-tail -n +2 cowpea_test.tsv > new.tsv
+cut -f22,23,24 snps_cowpea.tsv | sed -e 's/Vu0//g ; s/Vu//g' | tail -n +2 > new.tsv
 
 tail -n +2 Compara_cowpea_homologs_ara.tsv > new2.tsv
 
