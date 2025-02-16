@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+# Data Inputs Vigna_unguiculata.ASM411807v1.60.chr.gff3 (filtered_assembly.gff3), gwas_regions.tsv (new.tsv), Compara_cowpea_homologs_ara.tsv (new2.tsv)
 # Filtering Ensembl dataset for specific columns regarding chromosome number, start and end regions of the gene, and gene id
 
 awk '$3 == "gene" {print $1 "\t" $3 "\t" $4 "\t" $5 "\t" $9}' Vigna_unguiculata.ASM411807v1.60.chr.gff3 | \
@@ -73,7 +74,7 @@ join -1 12 -2 3 <(sort -k12 tmp.tsv) <(sort -k3 final.tsv) | sed 's/ /\t/g' > sn
 # Trimming Dataset for only necessary fields & adding header
 
 echo -e "snp\tgene_id\tchr\tstart_gene\tend_gene\thomolog_id\thomolog_type\thomolog_name\tgene_desc\tprotein_coding\tid\tsnp_start\tsnp_end\tbp\tallele1\tallele0\taf\tbeta\tp_lrt" > snp_gwas.tsv
-cut -f1-3,5-9,11-13,15-22 snp_new.tsv >> snp_gwas.tsv
+cut -f1-3,5-9,11-13,15-22 snp_new.tsv | sort -u >> snp_gwas.tsv
 
 # Removing Unnecessary output files created by this script
-rm -r snp_new.tsv tmp.tsv combined_snp.tsv snp_list.tsv
+rm -r snp_new.tsv tmp.tsv combined_snp.tsv snp_list.tsv final.tsv new*.tsv filtered_assembly.gff3 data4.tsv
